@@ -10,19 +10,29 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer >
-      <Tab.Navigator >
-        <Tab.Screen name="AI" component={AssistantPage} options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ focused,color, size }) => (
-            <TabBarIcon1 focused={focused} />
-          ),
-        }}/>
+      <Tab.Navigator screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarStyle: {
+          height: 90,
+          paddingHorizontal: 0,
+          paddingTop: 35,
+          backgroundColor: '#000000',
+          // position: 'absolute',
+          borderTopWidth: 0,
+        },
+      })}>
         <Tab.Screen name="Pet" component={PetPage} options={{
           tabBarLabel: '',
-          tabBarIcon: ({ focused,color, size }) => (
-            <TabBarIcon2 focused={focused}/>
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabBarIcon1 focused={focused} />
           ),
-        }}/>
+        }} />
+        <Tab.Screen name="AI" component={AssistantPage} options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabBarIcon2 focused={focused} />
+          ),
+        }} />
       </Tab.Navigator>
     </NavigationContainer>
   );
