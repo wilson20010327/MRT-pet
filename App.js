@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AssistantPage from './Assitant';
+import AssistantPage from './Assistant';
 import PetPage from './Pet';
 import TabBarIcon1 from './component/tab/TabBarIcon1';
 import TabBarIcon2 from './component/tab/TabBarIcon2';
