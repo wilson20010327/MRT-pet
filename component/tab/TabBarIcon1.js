@@ -6,7 +6,6 @@ export default function TabBarIcon1(focused) {
                 width: 40,
                 height: 40,
                 resizeMode: 'contain',
-                
             }} source={ focused.focused?require('../../assets/petIcon-clicked.png'):require('../../assets/petIcon-unclicked.png')} />
         </View>
     );
