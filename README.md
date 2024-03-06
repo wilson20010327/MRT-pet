@@ -20,8 +20,7 @@ npx expo --tunnel
 ![image](https://hackmd.io/_uploads/S1dLauk6T.png)
 
 
-## Contributions
-Whenever you want to contribute, you will have to do the following: 
+## Contributions to Codebase
 ### 1. Create a branch. 
 ```bash
 git branch -M username/name-of-your-branch
