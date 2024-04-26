@@ -13,10 +13,10 @@ export default function App() {
       <Tab.Navigator screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          height: 90,
+          height: 35,
           paddingHorizontal: 0,
           paddingTop: 35,
-          backgroundColor: '#000000',
+          backgroundColor: '#077AC2',
           // position: 'absolute',
           borderTopWidth: 0,
         },

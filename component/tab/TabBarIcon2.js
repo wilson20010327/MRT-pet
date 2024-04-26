@@ -13,20 +13,26 @@ export default function TabBarIcon2(focused) {
 }
 const styles = StyleSheet.create({
     container_clicked: {
-        width:132,
+        top:-35,
+        width:70,
+        height:70,
+        backgroundColor: '#077AC2',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 35,
+        borderWidth:5,
+        borderColor:'#DCDADA'
+    },
+    container_unclicked: {
+        top:-35,
+        width:70,
         height:70,
         backgroundColor: '#DCDADA',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 30
-    },
-    container_unclicked: {
-        width:132,
-        height:70,
-        backgroundColor: '#4C4C4C',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 30
+        borderRadius: 35,
+        borderWidth:5,
+        borderColor:'#077AC2'
     },
     
 });
