@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-export default function Expbar(prop ) {
+import { StyleSheet, Text, View, Image,ImageBackground } from 'react-native';
+export default function Expbar(prop) {
     return (
         <View style={styles.container}>
             <View style={styles.bar_outline}>
@@ -11,10 +11,14 @@ export default function Expbar(prop ) {
                     borderRadius: '50%'
                 }} ></View>
                 <View style={styles.foot_outline}>
-
+                    <Image style={styles.container} resizeMode='contain' source={require('../../assets/footprints.png')} />
                 </View>
             </View>
-            <View style={styles.level_outline}></View>
+            <View style={styles.level_outline}>
+                <ImageBackground style={styles.container} resizeMode='contain' source={require('../../assets/lvbackground.png')} >
+                    <Text style={styles.innerText}>LV {prop.lv}</Text>
+                </ImageBackground>
+            </View>
         </View>
     );
 }
@@ -33,8 +37,8 @@ const styles = StyleSheet.create({
         width: '55%',
         height: '25%',
         alignItems: 'center',
-        justifyContent:'left',
-        backgroundColor: 'white',
+        justifyContent: 'left',
+        // backgroundColor: 'white',
         borderWidth: 2,
         borderColor: 'red',
         borderRadius: '50%',
@@ -45,13 +49,16 @@ const styles = StyleSheet.create({
         width: '15%',
         height: '75%',
         alignItems: 'center',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
     },
     foot_outline: {
-        left:-5,
-        width: 40,
-        height: 40,
+        left: -30,
+        width: 60,
+        height: 60,
         alignItems: 'center',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
     },
+    innerText: {
+        color: 'white',
+      },
 });

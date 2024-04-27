@@ -11,7 +11,7 @@ export default function PetPage() {
         <ImageBackground style={styles.container} resizeMode='contain'source={ require('./assets/metro-background.png')} >
           <View style={styles.container}>
             <View style={styles.exp_container}>
-              <Expbar percentage='50%'/>
+              <Expbar percentage='50%' lv={10} />
             </View>
             <View style={styles.button_container}></View>
             <Image style={styles.monster} resizeMode='contain'source={ require('./assets/monster.png')}/>
