@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-export default function TabBarIcon2(focused) {
+export default function TabBarIcon5(focused) {
     return (
         <View style={styles.container}>
             <View style={focused.focused ? styles.container_clicked : styles.container_unclicked}>
@@ -7,10 +7,10 @@ export default function TabBarIcon2(focused) {
                     width: 30,
                     height: 30,
                     resizeMode: 'contain',
-                }} source={focused.focused ? require('../../assets/timer-clicked.png') : require('../../assets/timer-unclicked.png')} />
+                }} source={focused.focused ? require('../../assets/user-clicked.png') : require('../../assets/user-unclicked.png')} />
             </View>
             <View style={styles.text_outline}>
-                <Text style={styles.innerText}>到站時刻</Text>
+                <Text style={styles.innerText}>我的帳號</Text>
             </View>
         </View>
     );

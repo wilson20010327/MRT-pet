@@ -6,6 +6,9 @@ import AssistantPage from './Assistant';
 import PetPage from './Pet';
 import TabBarIcon1 from './component/tab/TabBarIcon1';
 import TabBarIcon2 from './component/tab/TabBarIcon2';
+import TabBarIcon3 from './component/tab/TabBarIcon3';
+import TabBarIcon4 from './component/tab/TabBarIcon4';
+import TabBarIcon5 from './component/tab/TabBarIcon5';
 const Tab = createBottomTabNavigator();
 export default function App() {
   return (
@@ -21,16 +24,34 @@ export default function App() {
           borderTopWidth: 0,
         },
       })}>
-        <Tab.Screen name="Pet" component={PetPage} options={{
+        <Tab.Screen name="route" component={AssistantPage} options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused, color, size }) => (
             <TabBarIcon1 focused={focused} />
           ),
         }} />
-        <Tab.Screen name="AI" component={AssistantPage} options={{
+        <Tab.Screen name="timer" component={AssistantPage} options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused, color, size }) => (
             <TabBarIcon2 focused={focused} />
+          ),
+        }} />
+        <Tab.Screen name="home" component={AssistantPage} options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabBarIcon3 focused={focused} />
+          ),
+        }} />
+        <Tab.Screen name="suitcase" component={AssistantPage} options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabBarIcon4 focused={focused} />
+          ),
+        }} />
+        <Tab.Screen name="account" component={PetPage} options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabBarIcon5 focused={focused} />
           ),
         }} />
       </Tab.Navigator>

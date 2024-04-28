@@ -1,38 +1,60 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 export default function TabBarIcon1(focused) {
     return (
-        <View style={focused.focused?styles.container_clicked:styles.container_unclicked}>
-            <Image style={{
-                width: 40,
-                height: 40,
-                resizeMode: 'contain',
-            }} source={ focused.focused?require('../../assets/petIcon-clicked.png'):require('../../assets/petIcon-unclicked.png')} />
+        <View style={styles.container}>
+            <View style={focused.focused ? styles.container_clicked : styles.container_unclicked}>
+                <Image style={{
+                    width: 30,
+                    height: 30,
+                    resizeMode: 'contain',
+                }} source={focused.focused ? require('../../assets/map-clicked.png') : require('../../assets/map-unclicked.png')} />
+            </View>
+            <View style={styles.text_outline}>
+                <Text style={styles.innerText}>捷運路線</Text>
+            </View>
         </View>
     );
-} 
+}
 
 const styles = StyleSheet.create({
+    container: {
+        top: -25,
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     container_clicked: {
-        top:-35,
-        width:70,
-        height:70,
+        width: 50,
+        height: 50,
         backgroundColor: '#077AC2',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 35,
-        borderWidth:5,
-        borderColor:'#DCDADA'
+        borderRadius: '50%',
+        borderWidth: 5,
+        borderColor: '#DCDADA'
     },
     container_unclicked: {
-        top:-35,
-        width:70,
-        height:70,
+        width: 50,
+        height: 50,
         backgroundColor: '#DCDADA',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 35,
-        borderWidth:5,
-        borderColor:'#077AC2'
+        borderRadius: '50%',
+        borderWidth: 5,
+        borderColor: '#077AC2'
     },
-    
+    text_outline:{
+        top:5,
+        width: 50,
+        height: 20,
+        backgroundColor: '#077AC2',
+        alignItems: 'center',
+    },
+    innerText: {
+        color: 'white',
+        fontSize: 10
+    },
+
 });
