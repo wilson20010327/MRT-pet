@@ -1,16 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,ImageBackground,Image } from 'react-native';
-import Header from './component/Header-self';
-import Expbar from './component/pet/Expbar';
-import PethomeButton from './component/pet/PethomeButton';
-import PointsButton from './component/pet/PointsButton';
-export default function PetPage() { 
+import Header from '../Header-self';
+import Expbar from './Expbar';
+import PethomeButton from './PethomeButton';
+import PointsButton from './PointsButton';
+export default function PetPage({navigation}) { 
   return (
     <View style={styles.container}>
-      <Header/>
+      <Header mode={true} navigation={navigation} />
       <View style={styles.ad_container}></View>
       <View style={styles.pet_container}>
-        <ImageBackground style={styles.container} resizeMode='contain'source={ require('./assets/metro-background.png')} >
+        <ImageBackground style={styles.container} resizeMode='contain'source={ require('../../assets/metro-background.png')} >
           <View style={styles.container}>
             <View style={styles.exp_container}>
               <Expbar percentage='50%' lv={10} />
@@ -23,7 +23,7 @@ export default function PetPage() {
                 <PointsButton/>
               </View>
             </View>
-            <Image style={styles.monster} resizeMode='contain'source={ require('./assets/monster.png')}/>
+            <Image style={styles.monster} resizeMode='contain'source={ require('../../assets/monster.png')}/>
           </View>
         </ImageBackground>
       </View>

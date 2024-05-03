@@ -2,8 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AssistantPage from './Assistant';
-import PetPage from './Pet';
+
+import AssistantPage from './screen/Assistant';
+import PersonalPage from './screen/Personal';
 import TabBarIcon1 from './component/tab/TabBarIcon1';
 import TabBarIcon2 from './component/tab/TabBarIcon2';
 import TabBarIcon3 from './component/tab/TabBarIcon3';
@@ -48,7 +49,7 @@ export default function App() {
             <TabBarIcon4 focused={focused} />
           ),
         }} />
-        <Tab.Screen name="account" component={PetPage} options={{
+        <Tab.Screen name="account" component={PersonalPage} options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused, color, size }) => (
             <TabBarIcon5 focused={focused} />

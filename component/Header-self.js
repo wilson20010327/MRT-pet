@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Button, View, ImageBackground, Image } from 'react-native';
 
-export default function Header() {
+export default function Header({mode,navigation}) {
     return (
         <ImageBackground style={styles.header} source={require('../assets/headerBack.png')}>
             <View style={styles.headerIcon_space}>
+                {mode?<Button  title='back' onPress={() => navigation.goBack()}/>:<View/>}
             </View>
             <View style={styles.center_space}>
                 <View style={styles.badge_space}>
@@ -18,7 +19,6 @@ export default function Header() {
         </ImageBackground>
     );
 }
-
 const styles = StyleSheet.create({
     header: {
         width: '100%',
@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '25%',
         alignItems: 'center',
+        justifyContent:'center',
+        zIndex: 1 //move to the top of the screen make the user can successfully press the button
     },
     center_space: {
         height: '100%',
