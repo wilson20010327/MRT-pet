@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Header from "./component/Header-self";
 import MoveableButton from "./component/button/MovableButton";
+import ChatRoom from "./component/ChatRoom";
 import { AppStateContext } from "./AppStateContext";
 export default function AssistantPage() {
   const [isChatVisible, setIsChatVisible] = React.useState(false);
@@ -20,6 +21,7 @@ export default function AssistantPage() {
         position={position}
         setPosition={setPosition}
       />
+      <ChatRoom isVisible={isChatVisible} onClose={handleChatToggle} />
       <StatusBar style="auto" />
     </View>
   );
