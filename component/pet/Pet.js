@@ -1,29 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,ImageBackground,Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import Header from '../Header-self';
 import Expbar from './Expbar';
 import PethomeButton from './PethomeButton';
 import PointsButton from './PointsButton';
-export default function PetPage({navigation}) { 
+export default function PetPage({ navigation }) {
   return (
     <View style={styles.container}>
       <Header mode={true} navigation={navigation} />
-      <View style={styles.ad_container}></View>
       <View style={styles.pet_container}>
-        <ImageBackground style={styles.container} resizeMode='contain'source={ require('../../assets/metro-background.png')} >
+        <ImageBackground style={styles.container} resizeMode='cover' source={require('../../assets/metro-background.png')} >
           <View style={styles.container}>
             <View style={styles.exp_container}>
               <Expbar percentage='50%' lv={10} />
             </View>
             <View style={styles.button_container}>
               <View style={styles.pet_home}>
-                <PethomeButton/>
+                <PethomeButton />
               </View>
               <View style={styles.point_outline}>
-                <PointsButton/>
+                <PointsButton />
               </View>
             </View>
-            <Image style={styles.monster} resizeMode='contain'source={ require('../../assets/monster.png')}/>
+            <View style={styles.monster}>
+              <Image style={{flex: 1}} resizeMode='contain' source={require('../../assets/monster.png')} />
+            </View>
+            <View style={styles.train}>
+              <Image style={{ flex: 1 }} resizeMode='contain' source={require('../../assets/Train.png')} />
+            </View>
           </View>
         </ImageBackground>
       </View>
@@ -34,48 +38,45 @@ export default function PetPage({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    width:'100%',
+    width: '100%',
     height: '100%',
     alignItems: 'center',
   },
-  ad_container: {
-    width:'100%',
-    height: '20%',
-    backgroundColor: 'white',
-    alignItems: 'center',
-    // justifyContent: 'center',
-  },
   pet_container: {
-    width:'100%',
-    height: '80%',
+    width: '100%',
+    height: '100%',
     alignItems: 'center',
-    // justifyContent: 'center',
+    justifyContent: 'center',
   },
   monster: {
-    width:'100%',
-    height: '60%',
-    bottom: 50,
+    width: '100%',
+    height: '25%',
+    alignItems: 'center',
+  },
+  train: {
+    width: '100%',
+    height: '25%',
     alignItems: 'center',
   },
   exp_container: {
-    top:5,
-    width:'100%',
+    top: 5,
+    width: '100%',
     height: '12%',
   },
   button_container: {
-    width:'85%',
+    width: '85%',
     height: '25%',
-    flexDirection:'row',
-    alignItems:'flex-start',
-    justifyContent:'space-between'
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between'
   },
   pet_home: {
-    width:60,
+    width: 60,
     height: 60,
     // backgroundColor: 'white',
   },
   point_outline: {
-    width:180,
+    width: 180,
     height: 60,
     // backgroundColor: 'white',
   },

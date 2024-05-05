@@ -34,7 +34,11 @@ export default function PersonalPage() {
         component={Main}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="PetHome" component={PetPage} options={{ headerShown: false }} />
+      <Stack.Screen 
+        name="PetHome" 
+        component={PetPage} 
+        options={{ headerShown: false }} 
+      />
     </Stack.Navigator>
   );
 }
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
   },
   flat_container: {
     width: '100%',
+    height: '100%',
   },
   element_outline: {
     width: '100%',

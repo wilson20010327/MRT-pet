@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'left',
         // backgroundColor: 'white',
-        borderWidth: 2,
-        borderColor: 'red',
+        borderWidth: 5,
+        borderColor: 'black',
         borderRadius: '50%',
         flexDirection: 'row'
     },
