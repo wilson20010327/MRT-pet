@@ -2,7 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { useState } from 'react';
+import { createNavigationContainerRef } from "@react-navigation/native"
 import AssistantPage from './screen/Assistant';
 import PersonalPage from './screen/Personal';
 import TabBarIcon1 from './component/tab/TabBarIcon1';
@@ -11,19 +12,23 @@ import TabBarIcon3 from './component/tab/TabBarIcon3';
 import TabBarIcon4 from './component/tab/TabBarIcon4';
 import TabBarIcon5 from './component/tab/TabBarIcon5';
 const Tab = createBottomTabNavigator();
+const ref = createNavigationContainerRef();
 export default function App() {
+  const [routeName, setRouteName] = useState();
   return (
-    <NavigationContainer >
+    <NavigationContainer
+      ref={ref}
+      onReady={() => {
+        setRouteName(ref.getCurrentRoute().name)
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeName;
+        const currentRouteName = ref.getCurrentRoute().name;
+        setRouteName(currentRouteName);
+      }}>
       <Tab.Navigator screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarStyle: {
-          height: 35,
-          paddingHorizontal: 0,
-          paddingTop: 35,
-          backgroundColor: '#077AC2',
-          // position: 'absolute',
-          borderTopWidth: 0,
-        },
+        tabBarStyle: styles.tabstyle,
       })}>
         <Tab.Screen name="route" component={AssistantPage} options={{
           tabBarLabel: '',
@@ -54,6 +59,9 @@ export default function App() {
           tabBarIcon: ({ focused, color, size }) => (
             <TabBarIcon5 focused={focused} />
           ),
+          tabBarStyle: 
+            routeName != 'Home' ? styles.tabstyle_hidden : styles.tabstyle,
+          
         }} />
       </Tab.Navigator>
     </NavigationContainer>
@@ -66,4 +74,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  tabstyle: {
+    height: 35,
+    paddingHorizontal: 0,
+    paddingTop: 35,
+    backgroundColor: '#077AC2',
+    borderTopWidth: 0,
+  },
+  tabstyle_hidden: {
+    display:'none'
+  }
 });

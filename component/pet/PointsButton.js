@@ -10,8 +10,8 @@ export default function PointsButton({ mode = 0 }) {
             <TouchableOpacity >
                 <View style={styles.button}>
                     <Image style={{
-                        width: 60,
-                        height: 60,
+                        width: 55,
+                        height: 55,
                         resizeMode: 'contain',
                     }} source={mode==0?require('../../assets/point.png'):mode==1?require('../../assets/coupon.png'):require('../../assets/ticket.png')} />
                 </View>
