@@ -7,23 +7,28 @@ const Stack = createNativeStackNavigator();
 const List = [
   {
     id: 1,
-    title: 'First Item',
+    title: '北捷小寵物',
+    image_path: require('../assets/monster.png')
   },
   {
     id: 2,
-    title: 'Second Item',
+    title: '修改密碼',
+    image_path: require('../assets/modify-password.png')
   },
   {
     id: 3,
-    title: 'Third Item',
+    title: '會員服務條款',
+    image_path: require('../assets/treaty.png')
   },
   {
     id: 4,
-    title: 'Four Item',
+    title: '聯絡我們',
+    image_path: require('../assets/phone.png')
   },
   {
     id: 5,
-    title: 'Five Item',
+    title: '會員帳號',
+    image_path: require('../assets/account.png')
   },
 ];
 export default function PersonalPage() {
@@ -71,7 +76,7 @@ function Simple_element({ item, navigation }) {
           width: 50,
           height: 50,
           resizeMode: 'contain',
-        }} source={require('../assets/home-unclicked.png')} />
+        }} source={item.image_path} />
         <View style={styles.word}>
           <Text style={styles.innerText}>{item.title}</Text>
         </View>

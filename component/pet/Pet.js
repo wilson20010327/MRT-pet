@@ -16,10 +16,24 @@ export default function PetPage({ navigation }) {
             </View>
             <View style={styles.button_container}>
               <View style={styles.pet_home}>
-                <PethomeButton />
+                {/* <PethomeButton /> */}
               </View>
               <View style={styles.point_outline}>
-                <PointsButton />
+                <PointsButton mode={0}/>
+              </View>
+            </View>
+            <View style={styles.button_container}>
+              <View style={styles.pet_home}>
+              </View>
+              <View style={styles.point_outline}>
+                <PointsButton mode={1}/>
+              </View>
+            </View>
+            <View style={styles.button_container}>
+              <View style={styles.pet_home}>
+              </View>
+              <View style={styles.point_outline}>
+                <PointsButton mode={2}/>
               </View>
             </View>
             <View style={styles.monster}>
@@ -65,10 +79,11 @@ const styles = StyleSheet.create({
   },
   button_container: {
     width: '85%',
-    height: '25%',
+    height: '8%',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    // backgroundColor:'white'
   },
   pet_home: {
     width: 60,

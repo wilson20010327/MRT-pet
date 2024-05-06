@@ -1,17 +1,19 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, } from 'react-native';
-export default function PointsButton() {
+export default function PointsButton({ mode = 0 }) {
     return (
         <View style={styles.container}>
-            <View style={styles.point_outline}>
+            {mode==0 ?
+             <View style={styles.point_outline}>
                 <Text style={styles.innerText}>23</Text>
-            </View>
+            </View> :mode==1 ?<Text style={styles.innerText}>優惠券</Text>:<Text style={styles.innerText}>我的票券</Text>}
+
             <TouchableOpacity >
                 <View style={styles.button}>
                     <Image style={{
                         width: 60,
                         height: 60,
                         resizeMode: 'contain',
-                    }} source={require('../../assets/point.png')} />
+                    }} source={mode==0?require('../../assets/point.png'):mode==1?require('../../assets/coupon.png'):require('../../assets/ticket.png')} />
                 </View>
             </TouchableOpacity>
         </View>
@@ -23,28 +25,29 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        flexDirection:'row',
-        justifyContent:'space-between'
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
     },
-    button:{
+    button: {
         width: 60,
         height: 60,
     },
-    point_outline:{
-        left:15,
-        width: 100,
+    point_outline: {
+        width: 50,
         height: 30,
-        borderRadius:'30%',
-        backgroundColor:'#FFA511',
+        borderRadius: '30%',
+        backgroundColor: '#019A78',
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent: 'center',
+        borderColor: 'white',
+        borderWidth: 1
     },
     innerText: {
         color: 'white',
-        textAlign:'center',
-        fontSize:20,
-        fontFamily: 'Cochin',
-        fontStyle:'italic'
-      },
+        textAlign: 'center',
+        fontSize: 20,
+        // fontFamily: 'Cochin',
+        // fontStyle:'italic'
+    },
 
 });
