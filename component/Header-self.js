@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '25%',
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent:'flex-end',
+        bottom:'5%',
         zIndex: 1 //move to the top of the screen make the user can successfully press the button
     },
     center_space: {

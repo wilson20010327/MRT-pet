@@ -1,19 +1,21 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, } from 'react-native';
-export default function PointsButton({ mode = 0 }) {
+export default function PointsButton({ mode = 0,navigation }) {
     return (
         <View style={styles.container}>
-            {mode==0 ?
-             <View style={styles.point_outline}>
-                <Text style={styles.innerText}>23</Text>
-            </View> :mode==1 ?<Text style={styles.innerText}>優惠券</Text>:<Text style={styles.innerText}>我的票券</Text>}
+            {mode == 0 ?
+                <View style={styles.point_outline}>
+                    <Text style={styles.innerText}>23</Text>
+                </View> : mode == 1 ? <Text style={styles.innerText}>優惠券</Text> : <Text style={styles.innerText}>我的票券</Text>}
 
-            <TouchableOpacity >
+            <TouchableOpacity onPress={() =>
+                (mode == 0) ? navigation.navigate('PetHome') : null
+            }>
                 <View style={styles.button}>
                     <Image style={{
                         width: 55,
                         height: 55,
                         resizeMode: 'contain',
-                    }} source={mode==0?require('../../assets/point.png'):mode==1?require('../../assets/coupon.png'):require('../../assets/ticket.png')} />
+                    }} source={mode == 0 ? require('../../assets/point.png') : mode == 1 ? require('../../assets/coupon.png') : require('../../assets/ticket.png')} />
                 </View>
             </TouchableOpacity>
         </View>

@@ -19,7 +19,7 @@ export default function PetPage({ navigation }) {
                 {/* <PethomeButton /> */}
               </View>
               <View style={styles.point_outline}>
-                <PointsButton mode={0}/>
+                <PointsButton mode={0} navigation={navigation}/>
               </View>
             </View>
             <View style={styles.button_container}>

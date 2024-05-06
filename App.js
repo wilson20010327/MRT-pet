@@ -60,7 +60,7 @@ export default function App() {
             <TabBarIcon5 focused={focused} />
           ),
           tabBarStyle: 
-            routeName != 'Home' ? styles.tabstyle_hidden : styles.tabstyle,
+            routeName == 'PetHome' ? styles.tabstyle_hidden : styles.tabstyle,
           
         }} />
       </Tab.Navigator>

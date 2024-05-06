@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity } fro
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Header from '../component/Header-self';
 import PetPage from '../component/pet/Pet';
+import PetHome from '../component/pet/PetHome';
 const Stack = createNativeStackNavigator();
 const List = [
   {
@@ -35,13 +36,18 @@ export default function PersonalPage() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="Person"
         component={Main}
         options={{ headerShown: false }}
       />
       <Stack.Screen 
-        name="PetHome" 
+        name="Pet" 
         component={PetPage} 
+        options={{ headerShown: false }} 
+      />
+      <Stack.Screen 
+        name="PetHome" 
+        component={PetHome} 
         options={{ headerShown: false }} 
       />
     </Stack.Navigator>
@@ -69,7 +75,7 @@ function Simple_element({ item, navigation }) {
   return (
     <TouchableOpacity style={styles.element_outline}
       onPress={() =>
-        navigation.navigate('PetHome')
+        navigation.navigate('Pet')
       }>
       <View style={styles.element}>
         <Image style={{
