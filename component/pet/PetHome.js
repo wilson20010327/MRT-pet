@@ -1,7 +1,61 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity,FlatList } from 'react-native';
 import Header from '../Header-self';
 import { useState } from 'react';
+const monster__list = [
+  {
+    id: 1,
+    title: 'jack',
+    // image_path: require('../assets/monster.png')
+  },
+  {
+    id: 2,
+    title: 'tom',
+    // image_path: require('../assets/modify-password.png')
+  },
+  {
+    id: 3,
+    title: 'mom',
+    // image_path: require('../assets/treaty.png')
+  },
+  {
+    id: 4,
+    title: 'daa',
+    // image_path: require('../assets/phone.png')
+  },
+  {
+    id: 5,
+    title: 'owieoq',
+    // image_path: require('../assets/account.png')
+  },
+];
+const item__list = [
+  {
+    id: 1,
+    title: 'fff',
+    // image_path: require('../assets/monster.png')
+  },
+  {
+    id: 2,
+    title: 'ggg',
+    // image_path: require('../assets/modify-password.png')
+  },
+  {
+    id: 3,
+    title: 'hhh',
+    // image_path: require('../assets/treaty.png')
+  },
+  {
+    id: 4,
+    title: 'jjj',
+    // image_path: require('../assets/phone.png')
+  },
+  {
+    id: 5,
+    title: 'kkk',
+    // image_path: require('../assets/account.png')
+  },
+];
 export default function PetHome({ navigation }) {
   const [item_type, setItem_type] = useState(0)
   return (
@@ -36,7 +90,13 @@ export default function PetHome({ navigation }) {
             </View>
           </View>
           <View style={styles.skin_container}>
-            
+            <FlatList
+              horizontal={true}
+              style={styles.flat_container}
+              data={item_type==0?monster__list:item__list}
+              renderItem={({ item }) => <Skin_element item={item}/>}
+              keyExtractor={item => item.id}
+            />
           </View>
         </View>
       </View>
@@ -44,12 +104,27 @@ export default function PetHome({ navigation }) {
     </View>
   );
 }
-
+function Skin_element({item}){
+  return(
+    <TouchableOpacity style={styles.skin_item}>
+      <Text>{item.title}</Text>
+    </TouchableOpacity>
+  )
+}
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
     alignItems: 'center',
+  },
+  skin_item: {
+    margin:10,
+    width: 80,
+    height: 80,
+    // alignSelf: 'center',
+    backgroundColor:'red',
+    justifyContent:'center',
+    alignItems:'center'
   },
   background_container: {
     width: '100%',
@@ -58,13 +133,13 @@ const styles = StyleSheet.create({
   },
   pet_container: {
     width: '100%',
-    height: '60%',
+    height: '70%',
     alignItems: 'center',
     backgroundColor: 'white'
   },
   item_container: {
     width: '100%',
-    height: '40%',
+    height: '30%',
     alignItems: 'center',
     // backgroundColor: 'red',
     borderTopLeftRadius: '30%',
@@ -145,5 +220,10 @@ const styles = StyleSheet.create({
   innerText: {
     color: '#007ab0',
     fontSize: 15
+  },
+  flat_container: {
+    width: '100%',
+    height: '100%',
+    flexDirection:'row',
   },
 });
