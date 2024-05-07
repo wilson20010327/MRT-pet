@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState } from 'react';
 import Header from '../component/Header-self';
-import PetPage from '../component/pet/Pet';
+import PetPage from '../component/pet/PetPage';
 import PetHome from '../component/pet/PetHome';
+import Pet from '../component/pet/Pet';
 const Stack = createNativeStackNavigator();
 const List = [
   {
@@ -33,6 +35,7 @@ const List = [
   },
 ];
 export default function PersonalPage() {
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -40,49 +43,68 @@ export default function PersonalPage() {
         component={Main}
         options={{ headerShown: false }}
       />
-      <Stack.Screen 
-        name="Pet" 
-        component={PetPage} 
-        options={{ headerShown: false }} 
+      <Stack.Screen
+        name="Pet"
+        component={PetPage}
+        options={{ headerShown: false }}
       />
-      <Stack.Screen 
-        name="PetHome" 
-        component={PetHome} 
-        options={{ headerShown: false }} 
+      <Stack.Screen
+        name="PetHome"
+        component={PetHome}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
 }
-function Main({ navigation }) {
+function Main({ route,navigation }) {
+  const [user_monster, set_monster] = useState(1);
+  const [user_item, set_item] = useState(3);
+  function setuser_monster(num){
+    set_monster(num)
+  }
+  function setuser_item(num){
+    set_item(num)
+  }
   return (
     <View style={styles.container}>
       <Header />
       <FlatList
         style={styles.flat_container}
         data={List}
-        renderItem={({ item }) => <Simple_element item={item} navigation={navigation} />}
+        renderItem={({ item }) => <Simple_element item={item} navigation={navigation}
+          user_monster={user_monster} user_item={user_item} />}
         keyExtractor={item => item.id}
       />
-      {/* <Button title='test'
-        onPress={() =>
-          navigation.navigate('PetHome')
-        } /> */}
       <StatusBar style="auto" />
     </View >
   )
 }
-function Simple_element({ item, navigation }) {
+function Simple_element({ item, navigation,
+  user_monster, setuser_monster, user_item, setuser_item }) {
   return (
     <TouchableOpacity style={styles.element_outline}
-      onPress={() =>
-        navigation.navigate('Pet')
+      onPress={() => (item.id == 1) ?
+        navigation.navigate('Pet',{
+          user_monster: user_monster,
+          setuser_monster: setuser_monster,
+          user_item: user_item,
+          setuser_item: setuser_item
+        }) : null
       }>
       <View style={styles.element}>
-        <Image style={{
+        <View style={{
           width: 50,
           height: 50,
           resizeMode: 'contain',
-        }} source={item.image_path} />
+        }}>
+          {(item.id == 1) ? <Pet monster={user_monster} item={user_item} /> :
+            <Image style={{
+              width: 50,
+              height: 50,
+              resizeMode: 'contain',
+            }} source={item.image_path} />
+          }
+        </View>
         <View style={styles.word}>
           <Text style={styles.innerText}>{item.title}</Text>
         </View>

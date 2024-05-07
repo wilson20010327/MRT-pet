@@ -1,69 +1,64 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity,FlatList } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, FlatList } from 'react-native';
 import Header from '../Header-self';
 import { useState } from 'react';
+import Pet from './Pet';
 const monster__list = [
   {
+    id: 0,
+    // title: 'jack',
+    image_path: require('../../assets/monster.png'),
+  },
+  {
     id: 1,
-    title: 'jack',
-    // image_path: require('../assets/monster.png')
-  },
-  {
-    id: 2,
-    title: 'tom',
-    // image_path: require('../assets/modify-password.png')
-  },
-  {
-    id: 3,
-    title: 'mom',
-    // image_path: require('../assets/treaty.png')
-  },
-  {
-    id: 4,
-    title: 'daa',
-    // image_path: require('../assets/phone.png')
-  },
-  {
-    id: 5,
-    title: 'owieoq',
-    // image_path: require('../assets/account.png')
+    // title: 'tom',
+    image_path: require('../../assets/monster1.png')
   },
 ];
 const item__list = [
   {
+    id: 0,
+    // title: 'fff',
+    image_path: require('../../assets/hat1.png'),
+  },
+  {
     id: 1,
-    title: 'fff',
-    // image_path: require('../assets/monster.png')
+    // title: 'fff',
+    image_path: require('../../assets/hat2.png'),
   },
   {
     id: 2,
-    title: 'ggg',
-    // image_path: require('../assets/modify-password.png')
+    // title: 'fff',
+    image_path: require('../../assets/hat3.png'),
   },
   {
     id: 3,
-    title: 'hhh',
-    // image_path: require('../assets/treaty.png')
+    // title: 'fff',
+    image_path: require('../../assets/hat4.png'),
   },
   {
     id: 4,
-    title: 'jjj',
-    // image_path: require('../assets/phone.png')
-  },
-  {
-    id: 5,
-    title: 'kkk',
-    // image_path: require('../assets/account.png')
+    // title: 'fff',
+    image_path: require('../../assets/hat5.png'),
   },
 ];
-export default function PetHome({ navigation }) {
+export default function PetHome({ route, navigation }) {
+  var { user_monster, user_item} = route.params;
+  const [cur_monster, setcur_monster] = useState(user_monster)
+  const [cur_item, setcur_item] = useState(user_item)
+  const [temp_monster, settemp_monster] = useState(user_monster)
+  const [temp_item, settemp_item] = useState(user_item)
   const [item_type, setItem_type] = useState(0)
   return (
     <View style={styles.container}>
-      <Header mode={true} navigation={navigation} />
+      <Header mode={true} navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.pet_container}>
-          <ImageBackground style={styles.background_container} resizeMode='cover' source={require('../../assets/metro-background.png')} ></ImageBackground>
+          <ImageBackground style={styles.background_container} resizeMode='cover' source={require('../../assets/metro-background.png')} >
+            <View style={{height:'40%',width:'100%',justifyContent:'center',alignItems:'center'}}>
+              <Pet monster={temp_monster} item={temp_item}/>
+            </View>
+          </ImageBackground>
         </View>
         <View style={styles.item_container}>
           <View style={styles.button_container}>
@@ -84,7 +79,9 @@ export default function PetHome({ navigation }) {
               </TouchableOpacity>
             </View>
             <View style={styles.setting_container}>
-              <TouchableOpacity style={styles.save_button}>
+              <TouchableOpacity style={styles.save_button} onPress={()=>{
+                setcur_monster(temp_monster), setcur_item(temp_item),console.log(cur_monster)
+              }}>
                 <Text style={styles.innerText}>保存</Text>
               </TouchableOpacity>
             </View>
@@ -93,8 +90,9 @@ export default function PetHome({ navigation }) {
             <FlatList
               horizontal={true}
               style={styles.flat_container}
-              data={item_type==0?monster__list:item__list}
-              renderItem={({ item }) => <Skin_element item={item}/>}
+              data={item_type == 0 ? monster__list : item__list}
+              renderItem={({ item }) =>
+                <Skin_element item={item} item_type={item_type} settemp_monster={settemp_monster} settemp_item={settemp_item} />}
               keyExtractor={item => item.id}
             />
           </View>
@@ -104,10 +102,15 @@ export default function PetHome({ navigation }) {
     </View>
   );
 }
-function Skin_element({item}){
-  return(
-    <TouchableOpacity style={styles.skin_item}>
-      <Text>{item.title}</Text>
+function Skin_element({ item, item_type, settemp_monster, settemp_item }) {
+  return (
+    <TouchableOpacity style={styles.skin_item} onPress={() => {
+      (item_type == 0) ? settemp_monster(item.id) : settemp_item(item.id)
+    }}>
+      <Image style={{
+        width: '100%',
+        height: '100%',
+      }} resizeMode='contain' source={item.image_path} />
     </TouchableOpacity>
   )
 }
@@ -118,18 +121,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   skin_item: {
-    margin:10,
+    margin: 10,
     width: 80,
     height: 80,
     // alignSelf: 'center',
-    backgroundColor:'red',
-    justifyContent:'center',
-    alignItems:'center'
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   background_container: {
     width: '100%',
     height: '120%',
     alignItems: 'center',
+    justifyContent:'center'
   },
   pet_container: {
     width: '100%',
@@ -224,6 +228,6 @@ const styles = StyleSheet.create({
   flat_container: {
     width: '100%',
     height: '100%',
-    flexDirection:'row',
+    flexDirection: 'row',
   },
 });
