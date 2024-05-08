@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { createNavigationContainerRef } from "@react-navigation/native"
 import AssistantPage from './screen/Assistant';
 import PersonalPage from './screen/Personal';
+import { store } from './store/store';
+import { Provider } from 'react-redux';
 import TabBarIcon1 from './component/tab/TabBarIcon1';
 import TabBarIcon2 from './component/tab/TabBarIcon2';
 import TabBarIcon3 from './component/tab/TabBarIcon3';
@@ -16,55 +18,57 @@ const ref = createNavigationContainerRef();
 export default function App() {
   const [routeName, setRouteName] = useState();
   return (
-    <NavigationContainer
-      ref={ref}
-      onReady={() => {
-        setRouteName(ref.getCurrentRoute().name)
-      }}
-      onStateChange={async () => {
-        const previousRouteName = routeName;
-        const currentRouteName = ref.getCurrentRoute().name;
-        setRouteName(currentRouteName);
-      }}>
-      <Tab.Navigator screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarStyle: styles.tabstyle,
-      })}>
-        <Tab.Screen name="route" component={AssistantPage} options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon1 focused={focused} />
-          ),
-        }} />
-        <Tab.Screen name="timer" component={AssistantPage} options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon2 focused={focused} />
-          ),
-        }} />
-        <Tab.Screen name="home" component={AssistantPage} options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon3 focused={focused} />
-          ),
-        }} />
-        <Tab.Screen name="suitcase" component={AssistantPage} options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon4 focused={focused} />
-          ),
-        }} />
-        <Tab.Screen name="account" component={PersonalPage} options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabBarIcon5 focused={focused} />
-          ),
-          tabBarStyle: 
-            routeName == 'PetHome' ? styles.tabstyle_hidden : styles.tabstyle,
-          
-        }} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer
+        ref={ref}
+        onReady={() => {
+          setRouteName(ref.getCurrentRoute().name)
+        }}
+        onStateChange={async () => {
+          const previousRouteName = routeName;
+          const currentRouteName = ref.getCurrentRoute().name;
+          setRouteName(currentRouteName);
+        }}>
+        <Tab.Navigator screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarStyle: styles.tabstyle,
+        })}>
+          <Tab.Screen name="route" component={AssistantPage} options={{
+            tabBarLabel: '',
+            tabBarIcon: ({ focused, color, size }) => (
+              <TabBarIcon1 focused={focused} />
+            ),
+          }} />
+          <Tab.Screen name="timer" component={AssistantPage} options={{
+            tabBarLabel: '',
+            tabBarIcon: ({ focused, color, size }) => (
+              <TabBarIcon2 focused={focused} />
+            ),
+          }} />
+          <Tab.Screen name="home" component={AssistantPage} options={{
+            tabBarLabel: '',
+            tabBarIcon: ({ focused, color, size }) => (
+              <TabBarIcon3 focused={focused} />
+            ),
+          }} />
+          <Tab.Screen name="suitcase" component={AssistantPage} options={{
+            tabBarLabel: '',
+            tabBarIcon: ({ focused, color, size }) => (
+              <TabBarIcon4 focused={focused} />
+            ),
+          }} />
+          <Tab.Screen name="account" component={PersonalPage} options={{
+            tabBarLabel: '',
+            tabBarIcon: ({ focused, color, size }) => (
+              <TabBarIcon5 focused={focused} />
+            ),
+            tabBarStyle:
+              routeName == 'PetHome' ? styles.tabstyle_hidden : styles.tabstyle,
+
+          }} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 const styles = StyleSheet.create({
@@ -82,6 +86,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
   },
   tabstyle_hidden: {
-    display:'none'
+    display: 'none'
   }
 });

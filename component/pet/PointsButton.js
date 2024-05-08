@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, } from 'react-native';
-export default function PointsButton({ mode = 0, navigation, user_monster, user_item }) {
+export default function PointsButton({ mode = 0, navigation }) {
     return (
         <View style={styles.container}>
             {mode == 0 ?
@@ -8,10 +8,7 @@ export default function PointsButton({ mode = 0, navigation, user_monster, user_
                 </View> : mode == 1 ? <Text style={styles.innerText}>優惠券</Text> : <Text style={styles.innerText}>我的票券</Text>}
 
             <TouchableOpacity onPress={() =>
-                (mode == 0) ? navigation.navigate('PetHome', {
-                    user_monster: user_monster,
-                    user_item: user_item,
-                }) : null
+                (mode == 0) ? navigation.navigate('PetHome') : null
             }>
                 <View style={styles.button}>
                     <Image style={{

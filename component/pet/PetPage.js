@@ -2,15 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import Header from '../Header-self';
 import Expbar from './Expbar';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback,useState } from 'react';
-import PethomeButton from './PethomeButton';
+import { useSelector,shallowEqual } from 'react-redux';
 import Pet from './Pet';
 import PointsButton from './PointsButton';
+import { useIsFocused } from '@react-navigation/native';
 export default function PetPage({ route, navigation }) {
-  var { user_monster, user_item } = route.params;
-  const[cur_monser,setcur_monser]=useState(user_monster)
-  const[cur_item,setcur_item]=useState(user_item)
+  const user_monster=useSelector(state=>state.userData.user_monster,shallowEqual)
+  const user_item=useSelector(state=>state.userData.user_item,shallowEqual)
+  const isFocused = useIsFocused();//it is need to refresh the page
   return (
     <View style={styles.container}>
       <Header mode={true} navigation={navigation} />
@@ -25,8 +24,7 @@ export default function PetPage({ route, navigation }) {
                 {/* <PethomeButton /> */}
               </View>
               <View style={styles.point_outline}>
-                <PointsButton mode={0} navigation={navigation}
-                  user_item={cur_item} user_monster={cur_monser} />
+                <PointsButton mode={0} navigation={navigation}/>
               </View>
             </View>
             <View style={styles.button_container}>

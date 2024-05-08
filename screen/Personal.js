@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Header from '../component/Header-self';
 import PetPage from '../component/pet/PetPage';
 import PetHome from '../component/pet/PetHome';
 import Pet from '../component/pet/Pet';
+import { useSelector, shallowEqual } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 const List = [
   {
@@ -57,14 +59,10 @@ export default function PersonalPage() {
   );
 }
 function Main({ route,navigation }) {
-  const [user_monster, set_monster] = useState(1);
-  const [user_item, set_item] = useState(3);
-  function setuser_monster(num){
-    set_monster(num)
-  }
-  function setuser_item(num){
-    set_item(num)
-  }
+  const user_monster=useSelector(state=>state.userData.user_monster,shallowEqual)
+  const user_item=useSelector(state=>state.userData.user_item,shallowEqual)
+  const isFocused = useIsFocused();//it is need to refresh the page 
+  
   return (
     <View style={styles.container}>
       <Header />
@@ -80,16 +78,11 @@ function Main({ route,navigation }) {
   )
 }
 function Simple_element({ item, navigation,
-  user_monster, setuser_monster, user_item, setuser_item }) {
+  user_monster, user_item }) {
   return (
     <TouchableOpacity style={styles.element_outline}
       onPress={() => (item.id == 1) ?
-        navigation.navigate('Pet',{
-          user_monster: user_monster,
-          setuser_monster: setuser_monster,
-          user_item: user_item,
-          setuser_item: setuser_item
-        }) : null
+        navigation.navigate('Pet') : null
       }>
       <View style={styles.element}>
         <View style={{

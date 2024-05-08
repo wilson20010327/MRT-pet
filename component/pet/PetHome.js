@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, FlatList,Alert } from 'react-native';
 import Header from '../Header-self';
 import { useState } from 'react';
+import { useSelector,useDispatch,shallowEqual } from 'react-redux';
+import { dressSaveAction } from '../../store/userAction';
 import Pet from './Pet';
 const monster__list = [
   {
@@ -41,14 +43,24 @@ const item__list = [
     // title: 'fff',
     image_path: require('../../assets/hat5.png'),
   },
+  {
+    id: 5,
+    // title: 'fff',
+    image_path: require('../../assets/hat6.png'),
+  },
+  {
+    id: 6,
+    // title: 'fff',
+    image_path: require('../../assets/hat7.png'),
+  },
 ];
 export default function PetHome({ route, navigation }) {
-  var { user_monster, user_item} = route.params;
-  const [cur_monster, setcur_monster] = useState(user_monster)
-  const [cur_item, setcur_item] = useState(user_item)
-  const [temp_monster, settemp_monster] = useState(user_monster)
-  const [temp_item, settemp_item] = useState(user_item)
-  const [item_type, setItem_type] = useState(0)
+  const dispatch=useDispatch()
+  const user_monster=useSelector(state=>state.userData.user_monster,shallowEqual)
+  const user_item=useSelector(state=>state.userData.user_item,shallowEqual)
+  const [temp_monster, settemp_monster] = useState(user_monster)//user type tempsave
+  const [temp_item, settemp_item] = useState(user_item) //user type tempsave
+  const [item_type, setItem_type] = useState(0) // for select page
   return (
     <View style={styles.container}>
       <Header mode={true} navigation={navigation}/>
@@ -80,7 +92,10 @@ export default function PetHome({ route, navigation }) {
             </View>
             <View style={styles.setting_container}>
               <TouchableOpacity style={styles.save_button} onPress={()=>{
-                setcur_monster(temp_monster), setcur_item(temp_item),console.log(cur_monster)
+                dispatch(dressSaveAction(temp_monster,temp_item))
+                Alert.alert('通知','保存成功', [
+                  {text: 'OK', onPress: () => console.log('Save')},
+                ]);
               }}>
                 <Text style={styles.innerText}>保存</Text>
               </TouchableOpacity>
