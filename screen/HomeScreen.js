@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,ImageBackground } from 'react-native';
-import Header from './component/Header-self';
-export default function PetPage() {
+import { StyleSheet, Text,Image, View } from 'react-native';
+import Header from '../component/Header-self';
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Header/>
-      
+      <Image style={styles.container} resizeMode='contain' source={require('../assets/home.png')} />
       <StatusBar style="auto" />
     </View>
   );
@@ -13,10 +13,8 @@ export default function PetPage() {
 
 const styles = StyleSheet.create({
   container: {
-    width:'100%',
-    height: '100%',
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    // justifyContent: 'center',
   },
 });

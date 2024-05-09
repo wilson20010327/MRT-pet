@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Header from './component/Header-self';
+import Header from '../component/Header-self';
 export default function AssistantPage() {
   return (
     <View style={styles.container}>
