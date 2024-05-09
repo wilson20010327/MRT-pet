@@ -6,6 +6,10 @@ import { useState } from 'react';
 import { createNavigationContainerRef } from "@react-navigation/native"
 import AssistantPage from './screen/Assistant';
 import PersonalPage from './screen/Personal';
+import HomeScreen from './screen/HomeScreen';
+import TimePage from './screen/Timer';
+import TripPage from './screen/Trip';
+import RoutePage from './screen/Route';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import TabBarIcon1 from './component/tab/TabBarIcon1';
@@ -33,25 +37,25 @@ export default function App() {
           headerShown: false,
           tabBarStyle: styles.tabstyle,
         })}>
-          <Tab.Screen name="route" component={AssistantPage} options={{
+          <Tab.Screen name="route" component={RoutePage} options={{
             tabBarLabel: '',
             tabBarIcon: ({ focused, color, size }) => (
               <TabBarIcon1 focused={focused} />
             ),
           }} />
-          <Tab.Screen name="timer" component={AssistantPage} options={{
+          <Tab.Screen name="timer" component={TimePage} options={{
             tabBarLabel: '',
             tabBarIcon: ({ focused, color, size }) => (
               <TabBarIcon2 focused={focused} />
             ),
           }} />
-          <Tab.Screen name="home" component={AssistantPage} options={{
+          <Tab.Screen name="home" component={HomeScreen} options={{
             tabBarLabel: '',
             tabBarIcon: ({ focused, color, size }) => (
               <TabBarIcon3 focused={focused} />
             ),
           }} />
-          <Tab.Screen name="suitcase" component={AssistantPage} options={{
+          <Tab.Screen name="suitcase" component={TripPage} options={{
             tabBarLabel: '',
             tabBarIcon: ({ focused, color, size }) => (
               <TabBarIcon4 focused={focused} />
