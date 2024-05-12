@@ -35,7 +35,7 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
       const distanceToMinX = Math.abs(currentX - minX);
       const distanceToMaxX = Math.abs(currentX - maxX);
       const newX = distanceToMinX > distanceToMaxX ? maxX : minX;
-      const newY = clamp(currentY, 0, maxY);
+      const newY = Math.min(Math.max(currentY, 0), maxY);
 
       pan.setValue({ x: newX, y: newY });
 

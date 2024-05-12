@@ -105,10 +105,22 @@ const ChatRoom = ({ isVisible, onClose, onRedirectToggle, messages, setMessages 
     } else if (message.includes("優惠卷")) {
       response.text = (
         <View style={styles.otherMessageBubble}>
-          <Text style={styles.messageText}>沒問題，可以到以下連結查看</Text>
+          <Text style={styles.messageText}>沒問題，可以到以下連結查看您的優惠卷</Text>
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={onRedirectToggle}
+            onPress={() => onRedirectToggle(true, 'coupon')}
+          >
+            <Text style={styles.toggleButtonText}>前往</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (message.includes("列車動態")) {
+      response.text = (
+        <View style={styles.otherMessageBubble}>
+          <Text style={styles.messageText}>沒問題，可以到以下連結查看最新列車動態</Text>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => onRedirectToggle(true, 'line-info')}
           >
             <Text style={styles.toggleButtonText}>前往</Text>
           </TouchableOpacity>
