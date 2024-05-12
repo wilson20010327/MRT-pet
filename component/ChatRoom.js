@@ -14,13 +14,20 @@ import {
 } from "react-native";
 import MessageBubble from "./MessageBubble";
 
-const ChatRoom = ({ isVisible, onClose }) => {
+const ChatRoom = ({ isVisible, onClose, onRedirectToggle }) => {
   if (!isVisible) {
     return null;
   }
 
   const initMessages = [
-    { isMyMessage: false, text: "您好，今天有什麼需要為您提供的服務嗎?" },
+    {
+      isMyMessage: false,
+      text: (
+        <Text style={[styles.otherMessageBubble, styles.messageText]}>
+          您好，今天有什麼需要為您提供的服務嗎?
+        </Text>
+      ),
+    },
   ];
 
   const hintMessages = [
@@ -28,7 +35,7 @@ const ChatRoom = ({ isVisible, onClose }) => {
     "____捷運站有置物櫃可以放行李箱嗎?",
     "距離____捷運站最近的YouBike站?",
     "提供___捷運站的免費接駁車資訊",
-    "距離____捷運站最近的YouBike站?",
+    "我想查看我有什麼優惠卷",
     "____捷運站有置物櫃可以放行李箱嗎?",
     "還有多少空的置物櫃?",
   ];
@@ -72,18 +79,61 @@ const ChatRoom = ({ isVisible, onClose }) => {
   };
 
   const getResponseMessage = (message) => {
-    let response = { isMyMessage: false, text: "" };
+    let response = { isMyMessage: false, text: <></> };
+
     if (message.includes("捷運站最近的YouBike站")) {
-      response.text = "捷運站最近的YouBike站是____站";
+      response.text = (
+        <View style={styles.otherMessageBubble}>
+          <Text style={styles.messageText}>
+            捷運站最近的YouBike站是 ____ 站
+          </Text>
+        </View>
+      );
     } else if (message.includes("捷運站有置物櫃可以放行李箱")) {
-      response.text = "有喔! ____捷運站的置物櫃有分小與大兩種尺寸，計費方式分別為10元/時與20元/時。";
+      response.text = (
+        <View style={styles.otherMessageBubble}>
+          <Text style={styles.messageText}>
+            有喔!
+            ____捷運站的置物櫃有分小與大兩種尺寸，計費方式分別為10元/時與20元/時。
+          </Text>
+        </View>
+      );
     } else if (message.includes("還有多少空的置物櫃")) {
-      response.text = "很抱歉，台北捷運GO沒有提供此方面服務。但您可以參考台北捷運官網置物櫃的即時資訊，連接如下: https://www.metro.taipei/cp.aspx?n=074C9E96AEC24806"
+      response.text = (
+        <View style={styles.otherMessageBubble}>
+          <Text style={styles.messageText}>
+            很抱歉，台北捷運GO沒有提供此方面服務。但您可以參考台北捷運官網置物櫃的即時資訊，連接如下:
+          </Text>
+        </View>
+      );
     } else if (message.includes("提供___捷運站的免費接駁車資訊")) {
-      response.text = "___捷運站的免費接駁車資訊在___";
+      response.text = (
+        <View style={styles.otherMessageBubble}>
+          <Text style={styles.messageText}>
+            ___捷運站的免費接駁車資訊在 ___
+          </Text>
+        </View>
+      );
+    } else if (message.includes("優惠卷")) {
+      response.text = (
+        <View style={styles.otherMessageBubble}>
+          <Text style={styles.messageText}>沒問題，可以到以下連結查看</Text>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={onRedirectToggle}
+          >
+            <Text style={styles.toggleButtonText}>前往</Text>
+          </TouchableOpacity>
+        </View>
+      );
     } else {
-      response.text = "對不起，我不懂您的問題";
+      response.text = (
+        <View style={styles.otherMessageBubble}>
+          <Text style={styles.messageText}>對不起，我不懂您的問題</Text>
+        </View>
+      );
     }
+
     return response;
   };
 
@@ -104,13 +154,17 @@ const ChatRoom = ({ isVisible, onClose }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={handleHintToggle}>
             <Image
-            style={{
-              marginRight: 5,
-              width: 20,
-              height: 20,
-              resizeMode: "contain",
-            }}
-              source={isHintVisible?require("../assets/back.png"):require("../assets/help.png")}
+              style={{
+                marginRight: 5,
+                width: 20,
+                height: 20,
+                resizeMode: "contain",
+              }}
+              source={
+                isHintVisible
+                  ? require("../assets/back.png")
+                  : require("../assets/help.png")
+              }
             />
             <Text style={styles.buttonText}>
               {isHintVisible ? "隱藏提示" : "問題提示"}
@@ -154,15 +208,19 @@ const ChatRoom = ({ isVisible, onClose }) => {
             </View>
           ) : (
             <View style={{ flex: 1 }}>
-              {hintMessages.map((hint, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.hintButton}
-                  onPress={() => handleHintPress(hint)}
-                >
-                  <Text style={styles.buttonHintText}>{hint}</Text>
-                </TouchableOpacity>
-              ))}
+              <FlatList
+                data={hintMessages}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity
+                    key={index.toString()}
+                    style={styles.hintButton}
+                    onPress={() => handleHintPress(item)}
+                  >
+                    <Text style={styles.buttonHintText}>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
               <TouchableOpacity
                 style={{
                   marginTop: "5%",
@@ -196,7 +254,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    marginBottom: 35,
+    marginBottom: 150,
   },
   chatContainer: {
     backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -287,6 +345,32 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: "contain",
+  },
+  otherMessageBubble: {
+    padding: 8,
+    borderRadius: 8,
+    marginBottom: 8,
+    maxWidth: "80%",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    backgroundColor: "#009A96",
+  },
+  messageText: {
+    color: "white",
+    fontSize: 16,
+    overflow: "hidden",
+  },
+  toggleButton: {
+    margin: 5,
+    backgroundColor: "#007AB0",
+    borderRadius: 8,
+    width: 50,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  toggleButtonText: {
+    color: "white",
   },
 });
 

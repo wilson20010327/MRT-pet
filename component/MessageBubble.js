@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet } from "react-native";
 
 const MessageBubble = ({ message, isMyMessage }) => {
   return (
-    <View>
+    <View style>
       {!isMyMessage ? (
         <View style={styles.otherMessageContent}>
           <View style={styles.avatarContainer}>
@@ -12,9 +12,7 @@ const MessageBubble = ({ message, isMyMessage }) => {
               style={styles.avatar}
             />
           </View>
-          <Text style={[styles.otherMessageBubble, styles.messageText]}>
-            {message.text}
-          </Text>
+          {message.text}
         </View>
       ) : (
         <View style={styles.myMessageBubble}>

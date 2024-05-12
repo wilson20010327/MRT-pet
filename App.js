@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useState } from "react";
 import { createNavigationContainerRef } from "@react-navigation/native";
-import AssistantPage from "./screen/Assistant";
 import PersonalPage from "./screen/Personal";
 import HomeScreen from "./screen/HomeScreen";
 import TimePage from "./screen/Timer";

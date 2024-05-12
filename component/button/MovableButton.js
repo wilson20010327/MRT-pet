@@ -6,11 +6,18 @@ import {
   PanResponder,
   Animated,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 
-const MoveableButton = ({ onChatToggle, position, setPosition }) => {
-  const pan = React.useRef(new Animated.ValueXY(position)).current;
+const BUTTON_SIZE = 40;
 
+const MoveableButton = ({ onChatToggle, position, setPosition }) => {
+  const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+  const maxX = screenWidth / 2 - 70;
+  const maxY = screenHeight - 300;
+  const minX = -(screenWidth / 2);
+
+  const pan = React.useRef(new Animated.ValueXY(position)).current;
   const lastOffset = React.useRef(position);
 
   const panResponder = PanResponder.create({
@@ -18,24 +25,23 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
     onPanResponderMove: (evt, gestureState) => {
       const newX = lastOffset.current.x + gestureState.dx;
       const newY = lastOffset.current.y + gestureState.dy;
-      pan.x.setValue(newX);
-      pan.y.setValue(newY);
+
+      pan.setValue({ x: newX, y: newY });
     },
     onPanResponderRelease: () => {
-      let newX = pan.x._value,
-        newY = pan.y._value;
+      const currentX = pan.x._value;
+      const currentY = pan.y._value;
 
-      if (newX <= -130) {
-        newX = -150;
-      } else if (newX >= 130) {
-        newX = 150;
-      }
+      const distanceToMinX = Math.abs(currentX - minX);
+      const distanceToMaxX = Math.abs(currentX - maxX);
+      const newX = distanceToMinX > distanceToMaxX ? maxX : minX;
+      const newY = clamp(currentY, 0, maxY);
 
-      pan.x.setValue(newX);
-      pan.y.setValue(newY);
+      pan.setValue({ x: newX, y: newY });
+
       lastOffset.current.x = newX;
       lastOffset.current.y = newY;
-      
+
       setPosition({ x: newX, y: newY });
     },
     onMoveShouldSetPanResponder: (evt, { dx, dy }) => {
@@ -49,8 +55,6 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
         styles.buttonContainer,
         {
           transform: pan.getTranslateTransform(),
-          bottom: position.bottom,
-          right: position.right,
         },
       ]}
       {...panResponder.panHandlers}
@@ -58,8 +62,8 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
       <TouchableOpacity onPress={onChatToggle}>
         <Image
           style={{
-            width: 40,
-            height: 40,
+            width: BUTTON_SIZE,
+            height: BUTTON_SIZE,
             resizeMode: "contain",
           }}
           source={require("../../assets/aiIcon-click.png")}
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 70,
     height: 70,
-    borderRadius: 40,
+    borderRadius: 35,
     backgroundColor: "#077AC2",
     justifyContent: "center",
     alignItems: "center",
