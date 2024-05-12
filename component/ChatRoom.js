@@ -14,21 +14,10 @@ import {
 } from "react-native";
 import MessageBubble from "./MessageBubble";
 
-const ChatRoom = ({ isVisible, onClose, onRedirectToggle }) => {
+const ChatRoom = ({ isVisible, onClose, onRedirectToggle, messages, setMessages }) => {
   if (!isVisible) {
     return null;
   }
-
-  const initMessages = [
-    {
-      isMyMessage: false,
-      text: (
-        <Text style={[styles.otherMessageBubble, styles.messageText]}>
-          您好，今天有什麼需要為您提供的服務嗎?
-        </Text>
-      ),
-    },
-  ];
 
   const hintMessages = [
     "距離____捷運站最近的YouBike站?",
@@ -36,13 +25,12 @@ const ChatRoom = ({ isVisible, onClose, onRedirectToggle }) => {
     "距離____捷運站最近的YouBike站?",
     "提供___捷運站的免費接駁車資訊",
     "我想查看我有什麼優惠卷",
-    "____捷運站有置物櫃可以放行李箱嗎?",
+    "查看最新列車動態",
     "還有多少空的置物櫃?",
   ];
 
   const [isHintVisible, setIsHintVisible] = useState(false);
   const [textInputValue, setTextInputValue] = useState("");
-  const [messages, setMessages] = useState(initMessages);
   const flatListRef = useRef();
 
   const handleHintToggle = () => {
