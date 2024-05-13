@@ -7,6 +7,7 @@ import PetPage from '../component/pet/PetPage';
 import PetHome from '../component/pet/PetHome';
 import Pet from '../component/pet/Pet';
 import CouponPage from '../component/pet/Coupon';
+import TicketPage from '../component/pet/Ticket';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
@@ -59,6 +60,11 @@ export default function PersonalPage() {
       <Stack.Screen
         name="CouponPage"
         component={CouponPage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="TicketPage"
+        component={TicketPage}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

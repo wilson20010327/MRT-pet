@@ -8,7 +8,7 @@ export default function PointsButton({ mode = 0, navigation }) {
                 </View> : mode == 1 ? <Text style={styles.innerText}>優惠券</Text> : <Text style={styles.innerText}>我的票卡</Text>}
 
             <TouchableOpacity onPress={() =>
-                (mode == 0) ? navigation.navigate('PetHome') : (mode == 1) ? navigation.navigate('CouponPage') : (mode == 2) ? navigation.navigate('CouponPage'):null
+                (mode == 0) ? navigation.navigate('PetHome') : (mode == 1) ? navigation.navigate('CouponPage') : (mode == 2) ? navigation.navigate('TicketPage'):null
             }>
                 <View style={styles.button}>
                     <Image style={{
