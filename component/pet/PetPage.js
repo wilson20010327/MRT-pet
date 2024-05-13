@@ -31,14 +31,14 @@ export default function PetPage({ route, navigation }) {
               <View style={styles.pet_home}>
               </View>
               <View style={styles.point_outline}>
-                <PointsButton mode={1} />
+                <PointsButton mode={1} navigation={navigation} />
               </View>
             </View>
             <View style={styles.button_container}>
               <View style={styles.pet_home}>
               </View>
               <View style={styles.point_outline}>
-                <PointsButton mode={2} />
+                <PointsButton mode={2} navigation={navigation}/>
               </View>
             </View>
             <View style={styles.monster}>

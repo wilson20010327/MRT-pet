@@ -8,7 +8,7 @@ export default function PointsButton({ mode = 0, navigation }) {
                 </View> : mode == 1 ? <Text style={styles.innerText}>優惠券</Text> : <Text style={styles.innerText}>我的票券</Text>}
 
             <TouchableOpacity onPress={() =>
-                (mode == 0) ? navigation.navigate('PetHome') : null
+                (mode == 0) ? navigation.navigate('PetHome') : (mode == 1) ? navigation.navigate('CouponPage') : (mode == 2) ? navigation.navigate('CouponPage'):null
             }>
                 <View style={styles.button}>
                     <Image style={{
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 30,
         borderRadius: '30%',
-        backgroundColor: '#019A78',
+        backgroundColor: '#38B035',
         alignItems: 'center',
         justifyContent: 'center',
         borderColor: 'white',
