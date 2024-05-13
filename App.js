@@ -16,6 +16,7 @@ import TabBarIcon2 from "./component/tab/TabBarIcon2";
 import TabBarIcon3 from "./component/tab/TabBarIcon3";
 import TabBarIcon4 from "./component/tab/TabBarIcon4";
 import TabBarIcon5 from "./component/tab/TabBarIcon5";
+import 'react-native-reanimated'
 import { AppStateProvider } from "./AppStateContext";
 const Tab = createBottomTabNavigator();
 const ref = createNavigationContainerRef();
