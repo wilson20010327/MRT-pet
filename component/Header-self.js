@@ -1,16 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Button, View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
 
-export default function Header({mode,navigation}) {
+export default function Header({ mode, navigation }) {
     return (
         <ImageBackground style={styles.header} source={require('../assets/headerBack.png')}>
             <View style={styles.headerIcon_space}>
-                {mode?<Button  title='back' onPress={() => navigation.goBack()}/>:<View/>}
+                {mode ? <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                >
+                    <Image
+                        style={styles.BackIcon}
+                        source={require("../assets/back-2.png")}
+                    />
+                </TouchableOpacity> : <View />}
             </View>
             <View style={styles.center_space}>
                 <View style={styles.badge_space}>
                     <Image style={{
-                        flex:1,
+                        flex: 1,
                         resizeMode: 'contain',
                     }} source={require('../assets/badge.png')} />
                 </View>
@@ -33,8 +40,8 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '25%',
         alignItems: 'center',
-        justifyContent:'flex-end',
-        bottom:'5%',
+        justifyContent: 'flex-end',
+        bottom: '5%',
         zIndex: 1 //move to the top of the screen make the user can successfully press the button
     },
     center_space: {
@@ -45,11 +52,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     badge_space: {
-        marginTop:30,
+        marginTop: 30,
         width: 120,
         height: 60,
         // backgroundColor: 'red',
         alignItems: 'center',
+    },
+    BackIconContainer: {
+        position: "absolute",
+        top: -40,
+        left: -158,
+        zIndex: 1
+    },
+    BackIcon: {
+        width: 25,
+        height: 32,
     },
 
 });

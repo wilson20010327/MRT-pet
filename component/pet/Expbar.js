@@ -7,7 +7,7 @@ export default function Expbar(prop) {
                     width: prop.percentage,
                     height: '100%',
                     alignItems: 'left',
-                    backgroundColor: 'green',
+                    backgroundColor: '#38B035',
                     borderRadius: '50%'
                 }} ></View>
                 <View style={styles.foot_outline}>
