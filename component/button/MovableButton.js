@@ -8,10 +8,13 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-
+import Pet from "../pet/Pet";
+import { useSelector,useDispatch,shallowEqual } from 'react-redux';
 const BUTTON_SIZE = 40;
 
 const MoveableButton = ({ onChatToggle, position, setPosition }) => {
+  const user_monster=useSelector(state=>state.userData.user_monster,shallowEqual)
+  const user_item=useSelector(state=>state.userData.user_item,shallowEqual)
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
   const maxX = screenWidth / 2 - 70;
   const maxY = screenHeight - 300;
@@ -60,14 +63,14 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
       {...panResponder.panHandlers}
     >
       <TouchableOpacity onPress={onChatToggle}>
-        <Image
+        <View
           style={{
             width: BUTTON_SIZE,
             height: BUTTON_SIZE,
-            resizeMode: "contain",
           }}
-          source={require("../../assets/aiIcon-click.png")}
-        />
+        >
+          <Pet monster={user_monster} item={user_item}/>
+        </View>
       </TouchableOpacity>
     </Animated.View>
   );
