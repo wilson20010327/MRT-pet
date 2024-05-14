@@ -5,16 +5,23 @@ import {
   Image,
   PanResponder,
   Animated,
+  Easing,
   TouchableOpacity,
   Dimensions,
 } from "react-native";
 import Pet from "../pet/Pet";
-import { useSelector,useDispatch,shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 const BUTTON_SIZE = 40;
 
 const MoveableButton = ({ onChatToggle, position, setPosition }) => {
-  const user_monster=useSelector(state=>state.userData.user_monster,shallowEqual)
-  const user_item=useSelector(state=>state.userData.user_item,shallowEqual)
+  const user_monster = useSelector(
+    (state) => state.userData.user_monster,
+    shallowEqual
+  );
+  const user_item = useSelector(
+    (state) => state.userData.user_item,
+    shallowEqual
+  );
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
   const maxX = screenWidth / 2 - 70;
   const maxY = screenHeight - 300;
@@ -40,7 +47,12 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
       const newX = distanceToMinX > distanceToMaxX ? maxX : minX;
       const newY = Math.min(Math.max(currentY, 0), maxY);
 
-      pan.setValue({ x: newX, y: newY });
+      Animated.timing(pan, {
+        toValue: { x: newX, y: newY },
+        duration: 200,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: false,
+      }).start();
 
       lastOffset.current.x = newX;
       lastOffset.current.y = newY;
@@ -69,7 +81,7 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
             height: BUTTON_SIZE,
           }}
         >
-          <Pet monster={user_monster} item={user_item}/>
+          <Pet monster={user_monster} item={user_item} />
         </View>
       </TouchableOpacity>
     </Animated.View>
@@ -82,7 +94,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: "#077AC2",
+    backgroundColor: "rgb(56, 176, 53)",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 5,
