@@ -11,10 +11,17 @@ import {
   Platform,
   FlatList,
   Keyboard,
+  Linking,
 } from "react-native";
 import MessageBubble from "./MessageBubble";
 
-const ChatRoom = ({ isVisible, onClose, onRedirectToggle, messages, setMessages }) => {
+const ChatRoom = ({
+  isVisible,
+  onClose,
+  onRedirectToggle,
+  messages,
+  setMessages,
+}) => {
   if (!isVisible) {
     return null;
   }
@@ -25,8 +32,8 @@ const ChatRoom = ({ isVisible, onClose, onRedirectToggle, messages, setMessages 
     "距離____捷運站最近的YouBike站?",
     "提供___捷運站的免費接駁車資訊",
     "我想查看我有什麼優惠卷",
-    "查看最新列車動態",
-    "還有多少空的置物櫃?",
+    "我想查看最新列車動態",
+    "___捷運站還有多少空的置物櫃?",
   ];
 
   const [isHintVisible, setIsHintVisible] = useState(false);
@@ -53,17 +60,20 @@ const ChatRoom = ({ isVisible, onClose, onRedirectToggle, messages, setMessages 
       }, 100);
     }
   }, [messages]);
-
+  
   const handleButtonPress = () => {
-    if (textInputValue == "") return;
-    let newMessages = [...messages];
-    let newAiMessages = getResponseMessage(textInputValue);
-    let newMyMessages = { isMyMessage: true, text: textInputValue };
-    newMessages.push(newMyMessages);
-    newMessages.push(newAiMessages);
-    setMessages(newMessages);
+    if (textInputValue === "") return;
+
+    const newMyMessage = { isMyMessage: true, text: textInputValue };
+    setMessages(prevMessages => [...prevMessages, newMyMessage]);
+
     setTextInputValue("");
     Keyboard.dismiss();
+
+    setTimeout(() => {
+      let newAiMessage = getResponseMessage(textInputValue);
+      setMessages(prevMessages => [...prevMessages, newAiMessage]);
+    }, 1000);
   };
 
   const getResponseMessage = (message) => {
@@ -73,7 +83,7 @@ const ChatRoom = ({ isVisible, onClose, onRedirectToggle, messages, setMessages 
       response.text = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
-            捷運站最近的YouBike站是 ____ 站
+            距離北車捷運站最近的YouBike站是____站
           </Text>
         </View>
       );
@@ -82,55 +92,72 @@ const ChatRoom = ({ isVisible, onClose, onRedirectToggle, messages, setMessages 
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
             有喔!
-            ____捷運站的置物櫃有分小與大兩種尺寸，計費方式分別為10元/時與20元/時。
+            台北車站捷運站的置物櫃有分小與大兩種尺寸，計費方式分別為10元/時與20元/時。
           </Text>
         </View>
       );
-    } else if (message.includes("還有多少空的置物櫃")) {
+    } else if (message.includes("空的置物櫃")) {
       response.text = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
             很抱歉，台北捷運GO沒有提供此方面服務。但您可以參考台北捷運官網置物櫃的即時資訊，連接如下:
           </Text>
+          <Text
+            style={[styles.messageText, styles.linkText]}
+            onPress={() =>
+              Linking.openURL("https://www.opendata.vip/metro/locker/station")
+            }
+          >
+            https://www.opendata.vip/metro/locker/station
+          </Text>
         </View>
       );
-    } else if (message.includes("提供___捷運站的免費接駁車資訊")) {
+    } else if (message.includes("免費接駁車資訊")) {
       response.text = (
         <View style={styles.otherMessageBubble}>
-          <Text style={styles.messageText}>
-            ___捷運站的免費接駁車資訊在 ___
-          </Text>
+          <Text style={styles.messageText}>淡水站的免費接駁車資訊如下:</Text>
+          <Text style={styles.messageText}>1. 潤福生活新象</Text>
+          <Text style={styles.messageText}>2. 公車轉運月臺</Text>
+          <Text style={styles.messageText}>3. 拾翠山莊 </Text>
+          <Text style={styles.messageText}>4. 長緹海景飯店 </Text>
+          <Text style={styles.messageText}>5. 三芝區公所社區巴士</Text>
+          <Text style={styles.messageText}>6. 福容漁人碼頭大飯店</Text>
+          <Text style={styles.messageText}>乘車地點:公車轉運月臺</Text>
         </View>
       );
     } else if (message.includes("優惠卷")) {
       response.text = (
         <View style={styles.otherMessageBubble}>
-          <Text style={styles.messageText}>沒問題，可以到以下連結查看您的優惠卷</Text>
+          <Text style={styles.messageText}>
+            沒問題，可以到以下連結查看您的優惠卷
+          </Text>
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => onRedirectToggle(true, 'coupon')}
+            onPress={() => onRedirectToggle(true, "coupon")}
           >
-            <Text style={styles.toggleButtonText}>前往</Text>
+            <Text style={styles.toggleButtonText}>我的優惠卷</Text>
           </TouchableOpacity>
         </View>
       );
     } else if (message.includes("列車動態")) {
       response.text = (
         <View style={styles.otherMessageBubble}>
-          <Text style={styles.messageText}>沒問題，可以到以下連結查看最新列車動態</Text>
+          <Text style={styles.messageText}>
+            沒問題，可以到以下連結查看最新列車動態
+          </Text>
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => onRedirectToggle(true, 'line-info')}
+            onPress={() => onRedirectToggle(true, "line-info")}
           >
-            <Text style={styles.toggleButtonText}>前往</Text>
+            <Text style={styles.toggleButtonText}>列車最新動態</Text>
           </TouchableOpacity>
         </View>
       );
     } else {
       response.text = (
-        <View style={styles.otherMessageBubble}>
-          <Text style={styles.messageText}>對不起，我不懂您的問題</Text>
-        </View>
+        <Text style={[styles.otherMessageBubble, styles.messageText]}>
+          您好，今天有什麼需要為您提供的服務嗎?
+        </Text>
       );
     }
 
@@ -364,13 +391,17 @@ const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: "#007AB0",
     borderRadius: 8,
-    width: 50,
+    width: "100%",
     height: 35,
     alignItems: "center",
     justifyContent: "center",
   },
   toggleButtonText: {
     color: "white",
+  },
+  linkText: {
+    color: "blue",
+    textDecorationLine: "underline",
   },
 });
 
