@@ -10,10 +10,21 @@ import {
   Dimensions,
 } from "react-native";
 import Pet from "../pet/Pet";
+import { setAssistantPostion } from "../../store/userAction";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 const BUTTON_SIZE = 40;
 
-const MoveableButton = ({ onChatToggle, position, setPosition }) => {
+const MoveableButton = ({ onChatToggle }) => {
+  const dispatch = useDispatch();
+  const assistant_pos_x = useSelector(
+    (state) => state.userData.assistant_pos_x,
+    (prev, next) => prev === next
+  );
+  const assistant_pos_y = useSelector(
+    (state) => state.userData.assistant_pos_y,
+    (prev, next) => prev === next
+  );
+
   const user_monster = useSelector(
     (state) => state.userData.user_monster,
     shallowEqual
@@ -22,13 +33,29 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
     (state) => state.userData.user_item,
     shallowEqual
   );
+
+  React.useEffect(() => {
+    Animated.timing(pan, {
+      toValue: { x: assistant_pos_x, y: assistant_pos_y },
+      duration: 200,
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: false,
+    }).start();
+
+    lastOffset.current.x = assistant_pos_x;
+    lastOffset.current.y = assistant_pos_y;
+
+  }, [assistant_pos_x, assistant_pos_y]);
+
+  const pan = React.useRef(
+    new Animated.ValueXY({ x: assistant_pos_x, y: assistant_pos_y })
+  ).current;
+  const lastOffset = React.useRef({ x: assistant_pos_x, y: assistant_pos_y });
+
   const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
   const maxX = screenWidth / 2 - 70;
   const maxY = screenHeight - 300;
   const minX = -(screenWidth / 2);
-
-  const pan = React.useRef(new Animated.ValueXY(position)).current;
-  const lastOffset = React.useRef(position);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -47,17 +74,8 @@ const MoveableButton = ({ onChatToggle, position, setPosition }) => {
       const newX = distanceToMinX > distanceToMaxX ? maxX : minX;
       const newY = Math.min(Math.max(currentY, 0), maxY);
 
-      Animated.timing(pan, {
-        toValue: { x: newX, y: newY },
-        duration: 200,
-        easing: Easing.out(Easing.ease),
-        useNativeDriver: false,
-      }).start();
+      dispatch(setAssistantPostion(newX, newY));
 
-      lastOffset.current.x = newX;
-      lastOffset.current.y = newY;
-
-      setPosition({ x: newX, y: newY });
     },
     onMoveShouldSetPanResponder: (evt, { dx, dy }) => {
       return dx > 0 || dy > 0;

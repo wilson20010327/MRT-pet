@@ -1,18 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Header from "../component/Header-self";
 import MoveableButton from "../component/button/MovableButton";
 import ChatRoom from "../component/ChatRoom";
-import { AppStateContext } from "../AppStateContext";
 export default function TimePage() {
   const [isChatVisible, setIsChatVisible] = React.useState(false);
   const [isRedirectVisible, setIsRedirectVisible] = React.useState(false);
   const [redirectPage, setRedirectPage] = React.useState(
     require("../assets/time.png")
   );
-  const { position, setPosition, messages, setMessages } =
-    useContext(AppStateContext);
 
   const handleChatToggle = () => {
     setIsChatVisible(!isChatVisible);
@@ -38,18 +35,12 @@ export default function TimePage() {
     <View style={styles.container}>
       <Header />
       <View style={{ zIndex: 2 }}>
-        <MoveableButton
-          onChatToggle={handleChatToggle}
-          position={position}
-          setPosition={setPosition}
-        />
+        <MoveableButton onChatToggle={handleChatToggle} />
       </View>
       <View style={{ zIndex: 3 }}>
         <ChatRoom
           isVisible={isChatVisible}
           onClose={handleChatToggle}
-          messages={messages}
-          setMessages={setMessages}
           onRedirectToggle={handleRedirectToggle}
         />
       </View>

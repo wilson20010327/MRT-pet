@@ -14,17 +14,20 @@ import {
   Linking,
 } from "react-native";
 import MessageBubble from "./MessageBubble";
+import { setAssistantMessages } from "../store/userAction";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
-const ChatRoom = ({
-  isVisible,
-  onClose,
-  onRedirectToggle,
-  messages,
-  setMessages,
-}) => {
+const ChatRoom = ({ isVisible, onClose, onRedirectToggle }) => {
   if (!isVisible) {
     return null;
   }
+
+  const messages = useSelector(
+    (state) => state.userData.assistant_messages,
+    shallowEqual
+  );
+
+  const dispatch = useDispatch();
 
   const hintMessages = [
     "距離____捷運站最近的YouBike站?",
@@ -60,27 +63,28 @@ const ChatRoom = ({
       }, 100);
     }
   }, [messages]);
-  
+
   const handleButtonPress = () => {
     if (textInputValue === "") return;
 
     const newMyMessage = { isMyMessage: true, text: textInputValue };
-    setMessages(prevMessages => [...prevMessages, newMyMessage]);
+    const newMessages = [...messages, newMyMessage];
+    dispatch(setAssistantMessages(newMessages));
 
     setTextInputValue("");
     Keyboard.dismiss();
 
     setTimeout(() => {
       let newAiMessage = getResponseMessage(textInputValue);
-      setMessages(prevMessages => [...prevMessages, newAiMessage]);
+      dispatch(setAssistantMessages([...newMessages, newAiMessage]));
     }, 1000);
   };
 
   const getResponseMessage = (message) => {
-    let response = { isMyMessage: false, text: <></> };
+    let response = { isMyMessage: false };
 
     if (message.includes("捷運站最近的YouBike站")) {
-      response.text = (
+      response.html = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
             距離北車捷運站最近的YouBike站是____站
@@ -88,7 +92,7 @@ const ChatRoom = ({
         </View>
       );
     } else if (message.includes("捷運站有置物櫃可以放行李箱")) {
-      response.text = (
+      response.html = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
             有喔!
@@ -97,7 +101,7 @@ const ChatRoom = ({
         </View>
       );
     } else if (message.includes("空的置物櫃")) {
-      response.text = (
+      response.html = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
             很抱歉，台北捷運GO沒有提供此方面服務。但您可以參考台北捷運官網置物櫃的即時資訊，連接如下:
@@ -113,7 +117,7 @@ const ChatRoom = ({
         </View>
       );
     } else if (message.includes("免費接駁車資訊")) {
-      response.text = (
+      response.html = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>淡水站的免費接駁車資訊如下:</Text>
           <Text style={styles.messageText}>1. 潤福生活新象</Text>
@@ -126,7 +130,7 @@ const ChatRoom = ({
         </View>
       );
     } else if (message.includes("優惠卷")) {
-      response.text = (
+      response.html = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
             沒問題，可以到以下連結查看您的優惠卷
@@ -140,7 +144,7 @@ const ChatRoom = ({
         </View>
       );
     } else if (message.includes("列車動態")) {
-      response.text = (
+      response.html = (
         <View style={styles.otherMessageBubble}>
           <Text style={styles.messageText}>
             沒問題，可以到以下連結查看最新列車動態
@@ -154,7 +158,7 @@ const ChatRoom = ({
         </View>
       );
     } else {
-      response.text = (
+      response.html = (
         <Text style={[styles.otherMessageBubble, styles.messageText]}>
           您好，今天有什麼需要為您提供的服務嗎?
         </Text>

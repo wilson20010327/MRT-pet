@@ -1,18 +1,29 @@
 import React from "react";
 import Pet from "./pet/Pet";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { useSelector,useDispatch,shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 const MessageBubble = ({ message, isMyMessage }) => {
-  const user_monster=useSelector(state=>state.userData.user_monster,shallowEqual)
-  const user_item=useSelector(state=>state.userData.user_item,shallowEqual)
+  const user_monster = useSelector(
+    (state) => state.userData.user_monster,
+    shallowEqual
+  );
+  const user_item = useSelector(
+    (state) => state.userData.user_item,
+    shallowEqual
+  );
   return (
     <View style>
       {!isMyMessage ? (
         <View style={styles.otherMessageContent}>
           <View style={styles.avatarContainer}>
-            <Pet monster={user_monster} item={user_item}/>
+            <Pet monster={user_monster} item={user_item} />
           </View>
-          {message.text}
+          {message.text && (
+            <Text style={[styles.otherMessageBubble, styles.messageText]}>
+              {message.text}
+            </Text>
+          )}
+          {message.html}
         </View>
       ) : (
         <View style={styles.myMessageBubble}>
